@@ -60,7 +60,7 @@ int main() {
     account.displayBalance();    
     return 0;
 }
-```
+``` 
 
 # Day 2: Library Management System (C++)
 
@@ -143,3 +143,114 @@ int main() {
     book3.displayDetails();
     return 0;
 }
+```
+
+# Day 3: Shape Area and Perimeter Calculator(C++)
+
+**Problem Statement:**
+Create a C++ program using Object-Oriented Programming (OOP) to calculate the area and perimeter of different shapes. The program should implement the following functionalities:
+1. Circle: Calculate the area and perimeter using the radius.
+2. Rectangle: Calculate the area and perimeter using the length and width.
+3. Triangle: Calculate the area and perimeter using the lengths of the three sides.
+   
+Use a base class `Shape` and derived classes (`Circle`, `Rectangle`, `Triangle`) to encapsulate the details and methods for each shape.
+
+---
+
+## Features
+
+1. **Calculate Circle Area**: This feature allows the user to calculate the area of any circle by providing the radius.
+2. **Calculate Rectangle Area**: This feature enables the user to input the dimensions of a rectangle and get the corresponding area.
+3. **Calculate Triangle Area**: The feature calculates the area based on the three sides of the triangle.
+   
+---
+
+## Code
+
+```cpp
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+// Base class
+class Shape {
+public:
+    virtual double calculateArea() const { return 0; }
+    virtual double calculatePerimeter() const { return 0; }
+    virtual ~Shape() {}
+};
+
+// Circle class
+class Circle : public Shape {
+private:
+    double radius;
+public:
+    Circle(double r) : radius(r) {}
+    double calculateArea() const override { return 3.14 * radius * radius; }
+    double calculatePerimeter() const override { return 2 * 3.14 * radius; }
+};
+
+// Rectangle class
+class Rectangle : public Shape {
+private:
+    double length, width;
+public:
+    Rectangle(double l, double w) : length(l), width(w) {}
+    double calculateArea() const override { return length * width; }
+    double calculatePerimeter() const override { return 2 * (length + width); }
+};
+
+// Triangle class
+class Triangle : public Shape {
+private:
+    double side1, side2, side3;
+public:
+    Triangle(double a, double b, double c) : side1(a), side2(b), side3(c) {}
+    double calculateArea() const override {
+        double s = (side1 + side2 + side3) / 2;
+        return sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
+    double calculatePerimeter() const override {
+        return side1 + side2 + side3;
+    }
+};
+
+int main() {
+    Circle circle(5.0);
+    Rectangle rectangle(4.0, 6.0);
+    Triangle triangle(3.0, 4.0, 5.0);
+
+    cout << "Circle:\n";
+    cout << "Area: " << circle.calculateArea() << endl;
+    cout << "Perimeter: " << circle.calculatePerimeter() << endl;
+
+    cout << "\nRectangle:\n";
+    cout << "Area: " << rectangle.calculateArea() << endl;
+    cout << "Perimeter: " << rectangle.calculatePerimeter() << endl;
+
+    cout << "\nTriangle:\n";
+    cout << "Area: " << triangle.calculateArea() << endl;
+    cout << "Perimeter: " << triangle.calculatePerimeter() << endl;
+
+    return 0;
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
