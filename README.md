@@ -296,9 +296,9 @@ public:
 
 int main() {
     vector<Student> students;
-    students.emplace_back("Alice", 95, 88, 92);
-    students.emplace_back("Bob", 78, 82, 74);
-    students.emplace_back("Charlie", 45, 52, 49);
+    students.emplace_back("Rishabh", 95, 88, 92);
+    students.emplace_back("Ayush", 78, 82, 74);
+    students.emplace_back("Neelesh", 45, 52, 49);
 
     cout << "Student Details:\n";
     cout << "-----------------------------" << endl;
