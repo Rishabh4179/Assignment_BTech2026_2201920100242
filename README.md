@@ -81,10 +81,10 @@ Each book should have the following properties:
 
 ## Features
 
-1. **Add Books**: Add a book to the library with its title, author, and availability status.
-2. **Issue Books**: Mark a book as issued if it's available.
-3. **Return Books**: Mark a book as returned, making it available again.
-4. **Display Book Details**: Show all details of the book.
+- **Add Books**: Add a book to the library with its title, author, and availability status.
+- **Issue Books**: Mark a book as issued if it's available.
+- **Return Books**: Mark a book as returned, making it available again.
+- **Display Book Details**: Show all details of the book.
 
 ---
 
@@ -159,9 +159,9 @@ Use a base class `Shape` and derived classes (`Circle`, `Rectangle`, `Triangle`)
 
 ## Features
 
-1. **Calculate Circle Area**: This feature allows the user to calculate the area of any circle by providing the radius.
-2. **Calculate Rectangle Area**: This feature enables the user to input the dimensions of a rectangle and get the corresponding area.
-3. **Calculate Triangle Area**: The feature calculates the area based on the three sides of the triangle.
+- **Calculate Circle Area**: This feature allows the user to calculate the area of any circle by providing the radius.
+- **Calculate Rectangle Area**: This feature enables the user to input the dimensions of a rectangle and get the corresponding area.
+- **Calculate Triangle Area**: The feature calculates the area based on the three sides of the triangle.
    
 ---
 
@@ -235,22 +235,77 @@ int main() {
     return 0;
 }
 ```
+# Day 4: Student Grade Management System(C++)
 
+**Problem Statement:**
+Design a program to calculate and display student details, including total marks and grades. The system should allow:
+- Adding a student's name and marks for three subjects.
+- Calculating the total marks.
+- Assigning grades based on total marks:
+   - A: 90–100
+   - B: 75–89
+   - C: 50–74
+   - F: Below 50
+---
 
+## Features
 
+- **Add Student Details**: Input the name and marks for three subjects of a student.
+- **Calculate Total Marks**: Automatically compute the total marks by summing up marks of all subjects.
+- **Assign Grades**: Assign grades `(A, B, C, F)` based on the total marks using predefined criteria.
+   
+---
 
+## Code
 
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
 
+class Student {
+private:
+    string name;
+    int marks[3]; 
+    int totalMarks;
+    char grade;
+    void calculateGrade() {
+        if (totalMarks >= 90) grade = 'A';
+        else if (totalMarks >= 75) grade = 'B';
+        else if (totalMarks >= 50) grade = 'C';
+        else grade = 'F';
+    }
+public:
+    Student(string studentName, int subject1, int subject2, int subject3) {
+        name = studentName;
+        marks[0] = subject1;
+        marks[1] = subject2;
+        marks[2] = subject3;
+        totalMarks = marks[0] + marks[1] + marks[2];
+        calculateGrade();
+    }
+    void displayDetails() const {
+        cout << "Name: " << name << endl;
+        cout << "Marks: " << marks[0] << ", " << marks[1] << ", " << marks[2] << endl;
+        cout << "Total Marks: " << totalMarks << endl;
+        cout << "Grade: " << grade << endl;
+        cout << "-----------------------------" << endl;
+    }
+};
 
+int main() {
+    vector<Student> students;
+    students.emplace_back("Alice", 95, 88, 92);
+    students.emplace_back("Bob", 78, 82, 74);
+    students.emplace_back("Charlie", 45, 52, 49);
 
+    cout << "Student Details:\n";
+    cout << "-----------------------------" << endl;
+    for (const auto& student : students) {
+        student.displayDetails();
+    }
+    return 0;
+}
 
-
-
-
-
-
-
-
-
-
-
+```
