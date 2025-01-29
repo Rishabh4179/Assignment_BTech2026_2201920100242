@@ -309,3 +309,85 @@ int main() {
 }
 
 ```
+
+# Day 5: Employee Payroll System(C++)
+
+**Problem Statement:**
+Design a payroll system for employees in a company. The system should:
+
+- Add employees with details like name, designation, and base salary.
+- Allow different types of employees, such as full-time and part-time, with unique salary calculations.
+   - Full-time: `baseSalary + allowances`
+   - Part-time: `hourlyRate * hoursWorked`
+---
+
+## Features
+
+- **Add Employee Details**: Store name, designation, and salary-related information.
+- **Calculate Salary**: Compute salary using different methods for full-time and part-time employees.
+- **Display Employee Details**: Show name, designation, and salary in a structured format.
+   
+---
+
+## Code
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Employee {
+protected:
+    string name;
+public:
+    Employee(string empName) : name(empName) {}
+    virtual double calculateSalary() const = 0; // Pure virtual function
+    virtual void displayDetails() const {
+        cout << "Name: " << name << endl;
+    }
+    virtual ~Employee() {}
+};
+class FullTimeEmployee : public Employee {
+private:
+    double baseSalary;
+public:
+    FullTimeEmployee(string empName, double salary)
+        : Employee(empName), baseSalary(salary) {}
+
+    double calculateSalary() const override {
+        return baseSalary;
+    }
+    void displayDetails() const override {
+        Employee::displayDetails();
+        cout << "Salary: $" << calculateSalary() << endl;
+    }
+};
+class PartTimeEmployee : public Employee {
+private:
+    double hourlyRate;
+    int hoursWorked;
+public:
+    PartTimeEmployee(string empName, double rate, int hours)
+        : Employee(empName), hourlyRate(rate), hoursWorked(hours) {}
+
+    double calculateSalary() const override {
+        return hourlyRate * hoursWorked;
+    }
+    void displayDetails() const override {
+        Employee::displayDetails();
+        cout << "Salary: $" << calculateSalary() << endl;
+    }
+};
+
+int main() {
+    FullTimeEmployee emp1("Rishabh", 5000);
+    PartTimeEmployee emp2("Aman", 20, 80);
+
+    cout << "Employee Payroll Details:\n------------------------" << endl;
+    emp1.displayDetails();
+    cout << "------------------------" << endl;
+    emp2.displayDetails();
+    
+    return 0;
+}
+
+```
