@@ -391,3 +391,69 @@ int main() {
 }
 
 ```
+
+# Day 6: Bank Loan Eligibility System(C++)
+
+**Problem Statement:**
+Create a system to check loan eligibility for bank customers. The system should:
+
+Allow adding customers with details like `name`, `income`, and `credit score`.
+Check eligibility based on:
+- Income >= 50,000
+- Credit score >= 700
+- Display eligible customers.
+---
+
+## Features
+
+- **Add Customer Details**: Store customer name, income, and credit score.
+- **Check Loan Eligibility**: Evaluate if income >= 50,000 and credit score >= 700.
+- **Display Results**: Show customer details along with eligibility status.
+   
+---
+
+## Code
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Customer {
+private:
+    string name;
+    double income;
+    int creditScore;
+
+public:
+    Customer(string custName, double custIncome, int custCreditScore)
+        : name(custName), income(custIncome), creditScore(custCreditScore) {}
+
+    bool isEligible() const {
+        return (income >= 50000 && creditScore >= 700);
+    }
+
+    void displayDetails() const {
+        cout << "Name: " << name << ", Income: $" << income << ", Credit Score: " << creditScore;
+        if (isEligible())
+            cout << " - Eligible for Loan" << endl;
+        else
+            cout << " - Not Eligible for Loan" << endl;
+    }
+};
+
+int main() {
+    vector<Customer> customers = {
+        Customer("Rishabh", 60000, 750),
+        Customer("Aryan", 40000, 680),
+        Customer("Siddharth", 55000, 710)
+    };
+
+    cout << "Loan Eligibility Results:\n------------------------" << endl;
+    for (const auto& customer : customers) {
+        customer.displayDetails();
+    }
+
+    return 0;
+}
+
+```
