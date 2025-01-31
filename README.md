@@ -413,6 +413,7 @@ Check eligibility based on:
 ---
 
 ## Code
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -457,3 +458,78 @@ int main() {
 }
 
 ```
+
+# Day 7: Vehicle Rental System(C++)
+
+**Problem Statement:**
+Design a Vehicle Rental System that allows customers to rent different types of vehicles. The system should:
+
+- Allow adding vehicles with details like `type`, `brand`, and `rental price`.
+- Use inheritance to categorize vehicles as `Car` and `Bike` with unique rental calculations.
+- Implement a method to calculate rental cost based on `days rented`.
+---
+
+## Features
+
+- **Store Vehicle Details**: Maintain type, brand, and rental price information.
+- **Calculate Rental Cost**: Compute total cost based on vehicle type and rental duration.
+- **Display Rental Summary**: Show vehicle details and rental amount.
+     
+---
+
+## Code
+```cpp
+#include <iostream>
+using namespace std;
+
+// Base class
+class Vehicle {
+protected:
+    string brand;
+    double rentalPricePerDay;
+public:
+    Vehicle(string vBrand, double price) : brand(vBrand), rentalPricePerDay(price) {}
+
+    virtual double calculateRentalCost(int days) const = 0; // Pure virtual function
+
+    virtual void displayDetails(int days) const {
+        cout << "Brand: " << brand << ", Rental Cost for " << days << " days: $"
+             << calculateRentalCost(days) << endl;
+    }
+
+    virtual ~Vehicle() {}
+};
+
+// Derived class for Cars
+class Car : public Vehicle {
+public:
+    Car(string vBrand, double price) : Vehicle(vBrand, price) {}
+
+    double calculateRentalCost(int days) const override {
+        return days * rentalPricePerDay;
+    }
+};
+
+// Derived class for Bikes
+class Bike : public Vehicle {
+public:
+    Bike(string vBrand, double price) : Vehicle(vBrand, price) {}
+
+    double calculateRentalCost(int days) const override {
+        return days * rentalPricePerDay * 0.8; // 20% discount for bikes
+    }
+};
+
+int main() {
+    Car car("Toyota", 50);
+    Bike bike("Yamaha", 30);
+
+    cout << "Vehicle Rental Summary:\n------------------------" << endl;
+    car.displayDetails(5); 
+    bike.displayDetails(5); 
+
+    return 0;
+}
+
+```
+
