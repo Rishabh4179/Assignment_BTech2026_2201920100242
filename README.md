@@ -531,7 +531,7 @@ int main() {
     return 0;
 ```
 
-# Day 7: Smart Home Automation System(C++)
+# Day 8: Smart Home Automation System(C++)
 
 **Problem Statement:**
 Design a Smart Home Automation System that manages multiple home devices. The system should:
