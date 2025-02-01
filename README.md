@@ -529,6 +529,110 @@ int main() {
     bike.displayDetails(5); 
 
     return 0;
+```
+
+# Day 7: Smart Home Automation System(C++)
+
+**Problem Statement:**
+Design a Smart Home Automation System that manages multiple home devices. The system should:
+
+- Support different types of devices like `Lights`, `Fans`, and `ACs`.
+- Allow turning devices ON/OFF dynamically.
+- Display the status of all connected devices.
+---
+
+## Features
+
+- **Device Control**: Turn devices ON/OFF with a function call.
+- **Device Status**: Display the state (ON/OFF) of all home devices.
+- **Scalability**: Easily extendable to add more device types.
+   
+---
+
+## Code
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Device {
+protected:
+    string name;
+    bool isOn;
+public:
+    Device(string dName) : name(dName), isOn(false) {}
+    virtual void turnOn() {
+        isOn = true;
+        cout << name << " is now ON." << endl;
+    }
+
+    virtual void turnOff() {
+        isOn = false;
+        cout << name << " is now OFF." << endl;
+    }
+
+    virtual void displayStatus() const {
+        cout << name << " Status: " << (isOn ? "ON" : "OFF") << endl;
+    }
+
+    virtual ~Device() {}
+};
+
+class Light : public Device {
+public:
+    Light(string dName) : Device(dName) {}
+};
+
+class Fan : public Device {
+public:
+    Fan(string dName) : Device(dName) {}
+};
+
+class AC : public Device {
+public:
+    AC(string dName) : Device(dName) {}
+};
+
+class SmartHome {
+private:
+    vector<Device*> devices;
+public:
+    void addDevice(Device* device) {
+        devices.push_back(device);
+    }
+
+    void showStatus() {
+        cout << "\nDevice Status:\n";
+        for (const auto& device : devices) {
+            device->displayStatus();
+        }
+    }
+
+    ~SmartHome() {
+        for (auto device : devices) {
+            delete device;
+        }
+    }
+};
+
+int main() {
+    SmartHome home;
+
+    Device* light = new Light("Living Room Light");
+    Device* fan = new Fan("Bedroom Fan");
+    Device* ac = new AC("Office AC");
+
+    home.addDevice(light);
+    home.addDevice(fan);
+    home.addDevice(ac);
+
+    light->turnOn();
+    fan->turnOff();
+    ac->turnOn();
+
+    home.showStatus();
+
+    return 0;
 }
 
 ```
