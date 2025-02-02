@@ -637,3 +637,125 @@ int main() {
 
 ```
 
+# Day 9: Virtual Zoo Management System(C++)
+
+**Problem Statement:**
+Design a Virtual Zoo Management System that manages different types of animals. The system should:
+
+- Support various animals like `Mammals`, `Birds`, and `Reptiles`.
+- Allow animals to make sounds, eat, and display their habitat information.
+- Keep track of all animals in the zoo and their unique behaviors.
+---
+
+## Features
+
+- **Animal Interaction**: Each animal has a unique sound and eating habit.
+- **Habitat Information**: Displays the natural habitat of each animal.
+- **Extensibility**: Easily add more animal types in the future.
+   
+---
+
+## Code 
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Animal {
+protected:
+    string name;
+    string habitat;
+public:
+    Animal(string n, string h) : name(n), habitat(h) {}
+
+    virtual void makeSound() const = 0; // Pure virtual function
+    virtual void eat() const = 0;
+
+    void displayHabitat() const {
+        cout << name << " lives in " << habitat << ".\n";
+    }
+
+    virtual ~Animal() {}
+};
+
+class Mammal : public Animal {
+public:
+    Mammal(string n) : Animal(n, "Land") {}
+
+    void makeSound() const override {
+        cout << name << " makes a growling sound!\n";
+    }
+
+    void eat() const override {
+        cout << name << " eats plants and meat. \n";
+    }
+};
+
+class Bird : public Animal {
+public:
+    Bird(string n) : Animal(n, "Sky and Trees") {}
+
+    void makeSound() const override {
+        cout << name << " chirps melodiously! \n";
+    }
+
+    void eat() const override {
+        cout << name << " eats seeds and worms. \n";
+    }
+};
+
+class Reptile : public Animal {
+public:
+    Reptile(string n) : Animal(n, "Swamps and Deserts") {}
+
+    void makeSound() const override {
+        cout << name << " hisses loudly! \n";
+    }
+
+    void eat() const override {
+        cout << name << " eats insects and small animals. \n";
+    }
+};
+
+class Zoo {
+private:
+    vector<Animal*> animals;
+public:
+    void addAnimal(Animal* animal) {
+        animals.push_back(animal);
+    }
+
+    void showAllAnimals() const {
+        cout << "\nAnimals in the Zoo:\n";
+        for (const auto& animal : animals) {
+            animal->displayHabitat();
+            animal->makeSound();
+            animal->eat();
+            cout << "-----------------\n";
+        }
+    }
+
+    ~Zoo() {
+        for (auto animal : animals) {
+            delete animal;
+        }
+    }
+};
+
+int main() {
+    Zoo myZoo;
+
+    Mammal* lion = new Mammal("Lion");
+    Bird* parrot = new Bird("Parrot");
+    Reptile* snake = new Reptile("Snake");
+
+    myZoo.addAnimal(lion);
+    myZoo.addAnimal(parrot);
+    myZoo.addAnimal(snake);
+
+    myZoo.showAllAnimals();
+
+    return 0;
+}
+
+```
