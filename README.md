@@ -759,3 +759,92 @@ int main() {
 }
 
 ```
+
+# Day 10: Online Quiz System(C++)
+
+**Problem Statement:**
+Design an Online Quiz System where users can take quizzes on different topics. The system should:
+
+- Allow adding multiple questions with a question text and answer choices.
+- Enable users to attempt a quiz and select answers.
+- Evaluate and display the score at the end of the quiz.
+---
+
+## Features
+
+- **Question Bank**: Store multiple quiz questions with options.
+- **User Interaction**: Allow users to select answers and complete the quiz.
+- **Automatic Scoring**: Evaluate responses and display the final score.
+   
+---
+
+## Code
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Question {
+private:
+    string text;
+    vector<string> options;
+    int correctAnswer;
+public:
+    Question(string txt, vector<string> opts, int correct) 
+        : text(txt), options(opts), correctAnswer(correct) {}
+
+    void display() const {
+        cout << text << "\n";
+        for (size_t i = 0; i < options.size(); ++i) {
+            cout << i + 1 << ". " << options[i] << "\n";
+        }
+    }
+
+    bool checkAnswer(int userAnswer) const {
+        return userAnswer == correctAnswer;
+    }
+};
+
+class Quiz {
+private:
+    vector<Question> questions;
+    int score;
+public:
+    Quiz() : score(0) {}
+
+    void addQuestion(const Question& q) {
+        questions.push_back(q);
+    }
+
+    void start() {
+        int userChoice;
+        for (const auto& q : questions) {
+            q.display();
+            cout << "Your answer (1-" << q.options.size() << "): ";
+            cin >> userChoice;
+            if (q.checkAnswer(userChoice)) {
+                cout << "Correct!\n";
+                score++;
+            } else {
+                cout << "Wrong answer.\n";
+            }
+            cout << "---------------------\n";
+        }
+        cout << "Quiz Completed! Your Score: " << score << "/" << questions.size() << "\n";
+    }
+};
+
+int main() {
+    Quiz myQuiz;
+
+    myQuiz.addQuestion(Question("What is the capital of France?", {"Paris", "London", "Rome", "Berlin"}, 1));
+    myQuiz.addQuestion(Question("Who developed C++?", {"Dennis Ritchie", "Bjarne Stroustrup", "James Gosling", "Guido van Rossum"}, 2));
+    myQuiz.addQuestion(Question("What is the value of Sin90°?", {"0", "undefined", "1", "1/2"}, 3));
+
+    myQuiz.start();
+
+    return 0;
+}
+
+```
+
