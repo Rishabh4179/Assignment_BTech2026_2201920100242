@@ -842,6 +842,98 @@ int main() {
     myQuiz.addQuestion(Question("What is the value of Sin90°?", {"0", "undefined", "1", "1/2"}, 3));
 
     myQuiz.start();
+```
+
+# Day 11: Smart Parking System(C++)
+
+**Problem Statement:**
+Design a Smart Parking System that helps manage vehicle parking in a parking lot. The system should:
+
+- Allow vehicles to enter and exit while tracking occupied spaces.
+- Maintain vehicle details such as license plate and parking slot.
+- Display available slots and a list of parked vehicles.
+---
+
+## Features
+
+- **Vehicle Entry & Exit**: Register vehicles when they park and remove them upon exit.
+- **Parking Slot Management**: Keep track of available and occupied slots.
+- **Display Parked Vehicles**: Show vehicle details currently in the lot.
+   
+---
+
+## Code
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Vehicle {
+private:
+    string licensePlate;
+    int slotNumber;
+public:
+    Vehicle(string plate, int slot) : licensePlate(plate), slotNumber(slot) {}
+
+    void displayDetails() const {
+        cout << "Vehicle License: " << licensePlate << ", Slot: " << slotNumber << "\n";
+    }
+
+    int getSlotNumber() const { return slotNumber; }
+};
+
+class ParkingLot {
+private:
+    vector<Vehicle> parkedVehicles;
+    int totalSlots;
+public:
+    ParkingLot(int slots) : totalSlots(slots) {}
+
+    void parkVehicle(string plate, int slot) {
+        if (slot > totalSlots || slot < 1) {
+            cout << "Invalid slot number!\n";
+            return;
+        }
+        for (const auto& v : parkedVehicles) {
+            if (v.getSlotNumber() == slot) {
+                cout << "Slot " << slot << " is already occupied!\n";
+                return;
+            }
+        }
+        parkedVehicles.push_back(Vehicle(plate, slot));
+        cout << "Vehicle with license " << plate << " parked at Slot " << slot << ".\n";
+    }
+
+    void removeVehicle(int slot) {
+        for (auto it = parkedVehicles.begin(); it != parkedVehicles.end(); ++it) {
+            if (it->getSlotNumber() == slot) {
+                cout << "Vehicle at Slot " << slot << " removed.\n";
+                parkedVehicles.erase(it);
+                return;
+            }
+        }
+        cout << "No vehicle found at Slot " << slot << ".\n";
+    }
+
+    void displayParkedVehicles() const {
+        cout << "\nCurrently Parked Vehicles:\n";
+        for (const auto& v : parkedVehicles) {
+            v.displayDetails();
+        }
+    }
+};
+
+int main() {
+    ParkingLot lot(5); // Creating a parking lot with 5 slots
+
+    lot.parkVehicle("ABC123", 1);
+    lot.parkVehicle("XYZ789", 3);
+    lot.parkVehicle("LMN456", 5);
+
+    lot.displayParkedVehicles();
+
+    lot.removeVehicle(3);
+    lot.displayParkedVehicles();
 
     return 0;
 }
