@@ -940,3 +940,83 @@ int main() {
 
 ```
 
+# Day 12: Online Food Ordering System(C++)
+
+**Problem Statement:**
+Design an Online Food Ordering System that allows customers to order food from a restaurant. The system should:
+
+- Allow users to add food items to their cart.
+- Calculate the total bill after order placement.
+- Display order details, including items and cost.
+---
+
+## Features
+
+- **Add Items**: Customers can add food items to their cart.
+- **Bill Calculation**: Computes the total price of the order.
+- **Order Summary**: Displays ordered items with total cost.
+   
+---
+
+## Code
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class FoodItem {
+private:
+    string name;
+    double price;
+public:
+    FoodItem(string n, double p) : name(n), price(p) {}
+
+    string getName() const { return name; }
+    double getPrice() const { return price; }
+
+    void displayItem() const {
+        cout << name << " - $" << price << endl;
+    }
+};
+
+class Order {
+private:
+    vector<FoodItem> items;
+public:
+    void addItem(const FoodItem& item) {
+        items.push_back(item);
+        cout << item.getName() << " added to your order!\n";
+    }
+
+    void displayOrder() const {
+        if (items.empty()) {
+            cout << "Your cart is empty!\n";
+            return;
+        }
+        cout << "\nOrder Summary:\n";
+        double total = 0;
+        for (const auto& item : items) {
+            item.displayItem();
+            total += item.getPrice();
+        }
+        cout << "Total Bill: $" << total << "\n";
+    }
+};
+
+int main() {
+    Order myOrder;
+
+    FoodItem burger("Cheese Burger", 5.99);
+    FoodItem pizza("Margherita Pizza", 8.49);
+    FoodItem drink("Coke", 1.99);
+
+    myOrder.addItem(burger);
+    myOrder.addItem(pizza);
+    myOrder.addItem(drink);
+
+    myOrder.displayOrder();
+
+    return 0;
+}
+
+```
