@@ -1020,3 +1020,120 @@ int main() {
 }
 
 ```
+
+# Day 13: Ride Sharing System(C++)
+
+**Problem Statement:**
+Design a Ride Sharing System that allows users to book rides with available drivers. The system should:
+
+- Allow users to request a ride with their location.
+- Assign an available driver to the user.
+- Display ride details, including driver name and estimated fare.
+---
+
+## Features
+
+- **Ride Booking**: Users can request rides.
+- **Driver Assignment**: Matches users with available drivers.
+- **Fare Calculation**: Computes ride fare based on distance.
+   
+---
+
+## Code
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Driver {
+private:
+    string name;
+    bool available;
+    double ratePerKm;
+public:
+    Driver(string n, double rate) : name(n), ratePerKm(rate), available(true) {}
+
+    bool isAvailable() const { return available; }
+    string getName() const { return name; }
+    double getRate() const { return ratePerKm; }
+
+    void assignRide() { available = false; }
+    void completeRide() { available = true; }
+
+    void displayDriver() const {
+        cout << "Driver: " << name << " | Rate: $" << ratePerKm << " per km\n";
+    }
+};
+
+class Ride {
+private:
+    double distance;
+    Driver* assignedDriver;
+public:
+    Ride(double dist, Driver* driver) : distance(dist), assignedDriver(driver) {
+        if (assignedDriver) assignedDriver->assignRide();
+    }
+
+    void completeRide() {
+        if (assignedDriver) assignedDriver->completeRide();
+    }
+
+    void displayRideDetails() const {
+        if (!assignedDriver) {
+            cout << "No available driver for this ride.\n";
+            return;
+        }
+        cout << "\nRide Details:\n";
+        cout << "Driver: " << assignedDriver->getName() << "\n";
+        cout << "Distance: " << distance << " km\n";
+        cout << "Total Fare: $" << (distance * assignedDriver->getRate()) << "\n";
+    }
+};
+
+class RideSharingApp {
+private:
+    vector<Driver> drivers;
+public:
+    void addDriver(const Driver& driver) {
+        drivers.push_back(driver);
+    }
+
+    Driver* findAvailableDriver() {
+        for (auto& driver : drivers) {
+            if (driver.isAvailable()) return &driver;
+        }
+        return nullptr;
+    }
+
+    void requestRide(double distance) {
+        Driver* driver = findAvailableDriver();
+        Ride ride(distance, driver);
+        ride.displayRideDetails();
+        ride.completeRide();
+    }
+
+    void displayDrivers() const {
+        cout << "\nAvailable Drivers:\n";
+        for (const auto& driver : drivers) {
+            if (driver.isAvailable()) driver.displayDriver();
+        }
+    }
+};
+
+int main() {
+    RideSharingApp app;
+
+    app.addDriver(Driver("John Doe", 2.5));
+    app.addDriver(Driver("Emma Smith", 3.0));
+    app.addDriver(Driver("Mike Johnson", 2.8));
+
+    app.displayDrivers();
+
+    app.requestRide(10.5); 
+
+    app.displayDrivers();
+
+    return 0;
+}
+
+```
