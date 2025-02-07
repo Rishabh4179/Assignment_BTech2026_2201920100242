@@ -1137,3 +1137,111 @@ int main() {
 }
 
 ```
+
+# Day 14: Scientific Calculator(C++)
+
+**Problem Statement:**
+Create a program that performs different mathematical operations using OOP. The calculator should:
+
+- Support basic operations like addition, subtraction, multiplication, and division.
+- Include advanced operations like exponentiation and square root.
+- Allow calculations on different data types (integers, floating-point numbers).
+---
+
+## Features
+
+- **Basic operations**: Addition, subtraction, multiplication, and division.
+- **Advanced functions**: Power and square root calculations.
+- **Handles different data types**: Works with integers and floating-point numbers.
+   
+---
+
+## Code
+```cpp
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class Calculator {
+protected:
+    double num1, num2;
+public:
+    Calculator(double a, double b = 0) : num1(a), num2(b) {}
+    virtual double compute() const = 0; // Pure virtual function
+};
+
+class Addition : public Calculator {
+public:
+    Addition(double a, double b) : Calculator(a, b) {}
+    double compute() const override {
+        return num1 + num2;
+    }
+};
+
+class Subtraction : public Calculator {
+public:
+    Subtraction(double a, double b) : Calculator(a, b) {}
+    double compute() const override {
+        return num1 - num2;
+    }
+};
+
+class Multiplication : public Calculator {
+public:
+    Multiplication(double a, double b) : Calculator(a, b) {}
+    double compute() const override {
+        return num1 * num2;
+    }
+};
+
+class Division : public Calculator {
+public:
+    Division(double a, double b) : Calculator(a, b) {}
+    double compute() const override {
+        if (num2 == 0) {
+            cout << "Error: Division by zero!\n";
+            return 0;
+        }
+        return num1 / num2;
+    }
+};
+
+class Power : public Calculator {
+public:
+    Power(double base, double exp) : Calculator(base, exp) {}
+    double compute() const override {
+        return pow(num1, num2);
+    }
+};
+
+class SquareRoot : public Calculator {
+public:
+    SquareRoot(double a) : Calculator(a) {}
+    double compute() const override {
+        if (num1 < 0) {
+            cout << "Error: Square root of negative number!\n";
+            return 0;
+        }
+        return sqrt(num1);
+    }
+};
+
+int main() {
+    Addition add(10, 5);
+    Subtraction sub(10, 5);
+    Multiplication mul(10, 5);
+    Division div(10, 5);
+    Power powCalc(2, 3);
+    SquareRoot sqrtCalc(16);
+
+    cout << "Addition: " << add.compute() << endl;
+    cout << "Subtraction: " << sub.compute() << endl;
+    cout << "Multiplication: " << mul.compute() << endl;
+    cout << "Division: " << div.compute() << endl;
+    cout << "Power: " << powCalc.compute() << endl;
+    cout << "Square Root: " << sqrtCalc.compute() << endl;
+
+    return 0;
+}
+
+```
