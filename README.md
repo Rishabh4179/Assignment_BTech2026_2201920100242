@@ -1245,3 +1245,70 @@ int main() {
 }
 
 ```
+
+# Day 15: Digital Wallet System(C++)
+
+**Problem Statement:**
+Design a Digital Wallet System that allows users to manage their funds securely. The system should:
+
+- Allow users to add money to their wallet.
+- Enable making payments while ensuring sufficient balance.
+- Display the current wallet balance.
+---
+
+## Features
+
+- **Secure Transactions**: Ensures balance doesn't go negative.
+- **Fund Management**: Add money and track spending.
+- **Balance Display**: Shows available funds in real time.
+   
+---
+
+## Code
+```cpp 
+#include <iostream>
+using namespace std;
+
+class DigitalWallet {
+private:
+    string owner;
+    double balance;
+public:
+    DigitalWallet(string name, double initialBalance = 0) : owner(name), balance(initialBalance) {}
+
+    void addMoney(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            cout << owner << " added $" << amount << " to the wallet.\n";
+        } else {
+            cout << "Invalid amount!\n";
+        }
+    }
+
+    void makePayment(double amount) {
+        if (amount > 0 && balance >= amount) {
+            balance -= amount;
+            cout << owner << " made a payment of $" << amount << ".\n";
+        } else {
+            cout << "Insufficient balance or invalid amount!\n";
+        }
+    }
+
+    void showBalance() const {
+        cout << owner << "'s Wallet Balance: $" << balance << endl;
+    }
+};
+
+int main() {
+    DigitalWallet wallet("Alice", 100);
+
+    wallet.showBalance();
+    wallet.addMoney(50);
+    wallet.makePayment(30);
+    wallet.showBalance();
+    wallet.makePayment(150); // Should show insufficient balance
+
+    return 0;
+}
+
+```
