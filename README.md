@@ -1312,3 +1312,68 @@ int main() {
 }
 
 ```
+
+# Day 16: Movie Ticket Booking System(C++)
+
+**Problem Statement:**
+Design an Online Movie Ticket Booking System that allows users to book tickets for different movies. The system should:
+
+- Allow users to select a movie and book tickets.
+- Ensure seat availability before confirming a booking.
+- Display booking details including movie name and number of seats booked.
+---
+
+## Features
+
+- **Seat Management**: Ensures tickets are available before booking.
+- **User-Friendly Booking**: Allows users to select a movie and number of seats.
+- **Booking Confirmation**: Displays the movie name and seats booked.
+   
+---
+
+## Code
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Movie {
+private:
+    string name;
+    int availableSeats;
+public:
+    Movie(string n, int seats) : name(n), availableSeats(seats) {}
+
+    bool bookTickets(int seats) {
+        if (seats > 0 && seats <= availableSeats) {
+            availableSeats -= seats;
+            cout << "Booking successful! " << seats << " tickets booked for " << name << ".\n";
+            return true;
+        } else {
+            cout << "Insufficient seats available for " << name << ".\n";
+            return false;
+        }
+    }
+    void showDetails() const {
+        cout << "Movie: " << name << " | Available Seats: " << availableSeats << endl;
+    }
+};
+
+int main() {
+ 
+    Movie movie1("Avengers: Endgame", 50);
+    Movie movie2("Inception", 30);
+
+    movie1.showDetails();
+    movie2.showDetails();
+
+    movie1.bookTickets(5);
+    movie2.bookTickets(35); 
+
+    movie1.showDetails();
+    movie2.showDetails();
+
+    return 0;
+}
+
+```
