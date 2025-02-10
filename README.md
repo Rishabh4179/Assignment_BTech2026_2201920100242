@@ -1377,3 +1377,82 @@ int main() {
 }
 
 ```
+
+# Day 17: Virtual Pet Simulation(C++)
+
+**Problem Statement:**
+Create a Virtual Pet Simulation where a pet can eat, sleep, play, and show happiness levels. The system should:
+
+- Allow users to feed, play, and rest with their pet.
+- Track the hunger, energy, and happiness levels dynamically.
+- Display the pet’s current mood based on interactions.
+---
+
+## Features
+
+- **Interactive Actions**: Feed, play, and rest to maintain pet health.
+- **Dynamic Mood Tracking**: Happiness changes based on user interaction.
+- **Life Simulation**: Pet behavior updates in real-time.
+   
+---
+
+## Code
+```cpp
+#include <iostream>
+using namespace std;
+
+class VirtualPet {
+private:
+    string name;
+    int hunger;
+    int energy;
+    int happiness;
+
+public:
+    VirtualPet(string petName) : name(petName), hunger(50), energy(50), happiness(50) {}
+
+    void feed() {
+        hunger -= 10;
+        happiness += 5;
+        if (hunger < 0) hunger = 0;
+        cout << name << " is eating... Hunger decreased!\n";
+    }
+
+    void play() {
+        if (energy > 10) {
+            happiness += 10;
+            energy -= 15;
+            cout << name << " is playing! Happiness increased!\n";
+        } else {
+            cout << name << " is too tired to play. Try resting.\n";
+        }
+    }
+
+    void rest() {
+        energy += 20;
+        hunger += 10;
+        if (energy > 100) energy = 100;
+        cout << name << " is resting... Energy restored!\n";
+    }
+
+    void showStatus() const {
+        cout << "\n--- " << name << "'s Status ---\n";
+        cout << "Hunger: " << hunger << "/100\n";
+        cout << "Energy: " << energy << "/100\n";
+        cout << "Happiness: " << happiness << "/100\n";
+    }
+};
+
+int main() {
+    VirtualPet pet("Buddy");
+
+    pet.showStatus();
+    pet.feed();
+    pet.play();
+    pet.rest();
+    pet.showStatus();
+
+    return 0;
+}
+
+```
